@@ -5,6 +5,7 @@
  */
 package com.sg.rockpaperscissors;
 
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,6 +14,7 @@ import java.util.Scanner;
  * @author acole
  */
 public class ImprovedRockPaperScissors {
+
     static Scanner sc = new Scanner(System.in);
     static Random ran = new Random();
     static int amountOfRounds;
@@ -21,8 +23,9 @@ public class ImprovedRockPaperScissors {
     static int computerScore = 0;
     static boolean playAgain;
     
-    
+
     public static void main(String[] args) {
+        
         System.out.println("Would you like to play Rock Paper Scissors(y/n)");
         String playGame = sc.nextLine();
         do {
@@ -39,9 +42,16 @@ public class ImprovedRockPaperScissors {
     }
 
     public static int askHowManyRounds() {
+
         System.out.println("How many rounds would you like to play must be "
                 + "between 1 and 10");
-        amountOfRounds = sc.nextInt();
+        try {
+
+            amountOfRounds = sc.nextInt();
+
+        } catch (InputMismatchException ex) {
+
+        }
 
         return amountOfRounds;
     }
@@ -57,6 +67,7 @@ public class ImprovedRockPaperScissors {
         }
         for (int i = 1; i <= amountOfRounds; i++) {
             userMove = pickRockPaperScissors();
+           
             computerMove = rpsBot();
             System.out.println("userMove is: " + userMove);
             System.out.println("ComputerMove is: " + computerMove);
@@ -81,25 +92,36 @@ public class ImprovedRockPaperScissors {
 
     public static String pickRockPaperScissors() {
         String userMove = "";
+        int userInput =0;
+        
 
-        int userInput;
+        
+            do {
+                try {
 
-        do{
+                System.out.println("Choose rock paper scissors 1 = ROCK, 2 = PAPER,"
+                        + "3 = SCISSORS");
+                userInput = sc.nextInt();
+                if (userInput == 1) {
+                    userMove = "ROCK";
+                    
+                } else if (userInput == 2) {
+                    userMove = "PAPER";
+                    
+                } else if (userInput == 3) {
+                    userMove = "SCISSORS";
+                    
+
+                } else {
+                    System.out.println("Invalid Number");
+                    
+                }
+                } catch (InputMismatchException ex) {
+            System.out.println("you did not enter a number");
+            sc.next();
             
-            System.out.println("Choose rock paper scissors 1 = ROCK, 2 = PAPER,"
-                + "3 = SCISSORS");
-            userInput = sc.nextInt();
-               if (userInput == 1) {
-            userMove = "ROCK";
-        } else if (userInput == 2) {
-            userMove = "PAPER";
-        } else if (userInput == 3) {
-            userMove = "SCISSORS";
-        } else {
-            System.out.println("Invalid number");
-        }
-           
-        } while(userInput < 1 || userInput > 3);
+                }
+            } while (userInput < 1 || userInput > 3);
 
         return userMove;
     }
@@ -156,4 +178,3 @@ public class ImprovedRockPaperScissors {
         return playAgain;
     }
 }
-
